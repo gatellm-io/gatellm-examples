@@ -1,0 +1,24 @@
+# Same deployment as the `docker run` line in the README, with the values in `.env`.
+#
+#   cp .env.docker.example .env    # then edit the three required values
+#   docker compose up -d
+#   open http://localhost:7890
+services:
+  gatellm:
+    image: ghcr.io/gatellm-io/gatellm:latest
+    container_name: gatellm
+    restart: unless-stopped
+    ports:
+      # Bound to loopback on purpose: the console has no TLS of its own, so it should not
+      # be reachable from the network until you put a reverse proxy in front of it.
+      - "127.0.0.1:7890:7890"
+    environment:
+      CONSOLE_PASSWORD: ${CONSOLE_PASSWORD:?set a console password}
+      ENCRYPTION_KEY: ${ENCRYPTION_KEY:?set an encryption key}
+      CONSOLE_SECRET_KEY: ${CONSOLE_SECRET_KEY:?set a console secret key}
+      STORAGE_MODE: sqlite
+    volumes:
+      - gatellm-data:/var/lib/protoflux
+
+volumes:
+  gatellm-data:

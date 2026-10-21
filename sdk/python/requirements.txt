@@ -1,0 +1,10 @@
+# Core examples (01-04)
+openai>=1.60
+anthropic>=0.60
+google-genai>=1.0
+
+# Framework examples (05-07) — install only the ones you run
+langchain-openai>=0.3
+llama-index-core>=0.12
+llama-index-llms-openai-like>=0.3
+crewai>=0.100
